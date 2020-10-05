@@ -1,0 +1,27 @@
+<!--HTML-->
+<!--FOR FUTHR INFO. SEE BELOW PLEASE-->
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css?ver=1.0.1">
+  <title>複利計算</title>
+  <style>
+      body {text-align: center;}
+  </style>
+</head>
+<body bgcolor="#FFFFFF">
+<h1>複利計算</h1>
+<form name="calcForm">
+<p>
+運用可能額：<input type="text" name="kanougaku" size="8" value="0">円<br>
+目標金額：<input type="text" name="mokuhixyoukinngaku" size="8">円<br> 
+目標達成期間：<input type="text" name="kikan" size="3">年<br>
+毎月積立額：<input id="monthlyDeposit" type="text" name="maituki" size="8">円<br>
+<input name="calc" type="button" value="計算"><br>
+必要な利回り：<input id="result" type="text" name="rimawari" size="15">%<br>
+</p>
+</form>
+<script src="js/fukurikeisan.js"></script>
+</body><!--CONTINUE BELOW-->
+
+</html>
