@@ -13,7 +13,7 @@
 <h1>複利計算</h1>
 <form name="calcForm">
 <p>
-運用可能額：<input type="text" name="kanougaku" size="8" value="0">円<br>
+<!--運用可能額：<input type="text" name="kanougaku" size="8" value="0">円<br>-->
 目標金額：<input type="text" name="mokuhixyoukinngaku" size="8">円<br> 
 目標達成期間：<input type="text" name="kikan" size="3">年<br>
 毎月積立額：<input id="monthlyDeposit" type="text" name="maituki" size="8">円<br>
@@ -21,7 +21,65 @@
 必要な利回り：<input id="result" type="text" name="rimawari" size="15">%<br>
 </p>
 </form>
-<script src="js/fukurikeisan.js"></script>
+<script>
+function $(name) {
+  return document.querySelector(`input[name=${name}]`);
+}
+
+var inputElement = $("calc");
+inputElement.onclick = function() {
+  // p -> 元本
+  // S -> 目標額
+  // n -> 運用期間（nか月後)
+  // m -> 毎月の投資額
+  var p, Sn, r, R, n, m;
+  // p = parseInt($("kanougaku").value);
+  Sn = parseInt($("mokuhixyoukinngaku").value);
+  n = parseInt($("kikan").value) * 12;
+  m = parseInt($("maituki").value);
+  m = m;
+  var $result = $("rimawari");
+
+  var rate = 0.001;
+  var S1;
+  while (rate < 0.1) {
+    r = Math.pow(1 + rate, 1 / 12) - 1;
+    R = 1 + r;
+
+    S1 = ((m * (1 - Math.pow(R, n))) / (1 - R)).toFixed(0);
+   
+    
+    console.log("rate is " + rate);
+    console.log("S1 is " + S1);
+    if (S1 >= Sn) {
+      break;
+    }
+    rate += 0.001;
+  }
+
+  if (rate.toFixed(3) > 0.099) {
+    r = 0.099;
+    var cnt = 1;
+    var Sx;
+    while (true) {
+      R = Math.pow(1 + r, 1 / n) - 1;
+      Sx = ((m * (1 - Math.pow(R, n))) / (1 - R)).toFixed(0);
+      r = Sn <= Sx ? r - r / 2 : r + r / 2;
+      cnt++;
+      if (Sn - Sx < 1 || cnt > 100) {
+        break;
+      }
+    }
+    $result.value = r.toFixed(3);
+  } else {
+    $result.value = (rate * 100).toFixed(1);
+  }
+};
+// イベントを削除
+inputElement.oninput = null;
+
+
+</script>
 </body><!--CONTINUE BELOW-->
 
 </html>
